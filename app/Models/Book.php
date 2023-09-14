@@ -18,9 +18,4 @@ class Book extends Model
         'amount',
         'gbooks_id'
     ];
-
-    public function author()
-    {
-        return $this->belongsTo(Author::class);
-    }
 }
