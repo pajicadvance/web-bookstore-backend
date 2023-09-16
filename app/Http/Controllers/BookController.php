@@ -29,6 +29,7 @@ class BookController extends Controller
                 'gbooks_id' => $gbooks_id
             ]);
         }
+        return response()->json(['book' => $book]);
     }
 
     public function getFirst10FromOffset(Request $request)
