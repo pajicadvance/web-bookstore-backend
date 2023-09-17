@@ -38,4 +38,10 @@ Route::group(['middleware' => ['auth:sanctum', 'userRole:user']], function(){
 Route::group(['middleware' => ['auth:sanctum', 'userRole:admin']], function(){
 
     Route::post('/books/create', [BookController::class, 'create']);
+
+    Route::get('/books/check', [BookController::class, 'checkIfBookIsInDatabase']);
+
+    Route::delete('/books/{id}/delete', [BookController::class, 'delete']);
+
+    Route::put('/books/{id}/edit', [BookController::class, 'edit']);
 });

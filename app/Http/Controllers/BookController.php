@@ -32,6 +32,54 @@ class BookController extends Controller
         return response()->json(['book' => $book]);
     }
 
+    public function delete($gbooks_id) 
+    {
+        $book = Book::where('gbooks_id', $gbooks_id)->get()->first();
+
+        if ($book) 
+        {
+            if (!$book->delete())
+            {
+                return response()->json([
+                    'error' => 'Unable to delete the book'
+                ]);
+            }
+
+            return response()->json([
+                'message' => 'Book deleted successfully',
+            ]);
+        }
+
+        return response()->json([
+            'error' => 'Book not found'
+        ]);
+    }
+
+    public function edit(Request $request, $gbooks_id) 
+    {
+        $book = Book::where('gbooks_id', $gbooks_id)->get()->first();
+
+        if ($book)
+        {
+            $book->name = $request->name;
+            $book->authors = $request->authors;
+            $book->published_date = $request->published_date;
+            $book->cover = $request->cover;
+            $book->price = $request->price;
+            $book->amount = $request->amount;
+
+            $book->save();
+
+            return response()->json([
+                'message' => 'Book updated successfully',
+            ]);
+        }
+
+        return response()->json([
+            'error' => 'Book not found'
+        ]);
+    }
+
     public function getFirst10FromOffset(Request $request)
     {
         $skip = $request->input('skip');
@@ -39,5 +87,22 @@ class BookController extends Controller
         return response()->json([
             'books' => $books
         ]);
+    }
+
+    public function checkIfBookIsInDatabase(Request $request)
+    {
+        $gbooks_id = $request->input('gbooks_id');
+        if (Book::where('gbooks_id', $gbooks_id)->first())
+        {
+            return response()->json([
+                'found' => TRUE
+            ]);
+        }
+        else
+        {
+            return response()->json([
+                'found' => FALSE
+            ]);
+        }
     }
 }
