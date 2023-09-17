@@ -61,12 +61,7 @@ class BookController extends Controller
 
         if ($book)
         {
-            $book->name = $request->name;
-            $book->authors = $request->authors;
-            $book->published_date = $request->published_date;
-            $book->cover = $request->cover;
             $book->price = $request->price;
-            $book->amount = $request->amount;
 
             $book->save();
 
@@ -97,7 +92,7 @@ class BookController extends Controller
         }
 
         return response()->json([
-            'request' => $requestArray
+            'request' => 'Books updated successfully'
         ]);
     }
 
