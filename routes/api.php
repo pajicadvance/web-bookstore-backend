@@ -29,6 +29,8 @@ Route::get('/books/get10', [BookController::class, 'getFirst10FromOffset']);
 Route::group(['middleware' => ['auth:sanctum']], function(){
 
     Route::post('/logout', [AuthController::class, 'logout']);
+
+    Route::post('/books/deduct', [BookController::class, 'deductAmounts']);
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'userRole:user']], function(){

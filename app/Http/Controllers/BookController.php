@@ -80,6 +80,27 @@ class BookController extends Controller
         ]);
     }
 
+    public function deductAmounts(Request $request)
+    {
+        $requestArray = $request->all();
+
+        if (isset($requestArray) && is_array($requestArray)) {
+            foreach ($requestArray as $item) {
+                $amount = $item['amount'];
+                $gbooksId = $item['gbooksId'];
+
+                $book = Book::where('gbooks_id', $gbooksId)->get()->first();
+                $book->amount = $book->amount - $amount;
+
+                $book->save();
+            }
+        }
+
+        return response()->json([
+            'request' => $requestArray
+        ]);
+    }
+
     public function getFirst10FromOffset(Request $request)
     {
         $skip = $request->input('skip');
